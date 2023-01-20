@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Portfolio.DB;
 using Portfolio.DB.Models;
-using Portfolio.Repository.Model;
+using Portfolio.Repository.Users.Model;
 
 namespace Portfolio.Repository.Users
 {
