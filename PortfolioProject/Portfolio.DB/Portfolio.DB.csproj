@@ -181,6 +181,14 @@
     <Compile Include="Migrations\20230120162734_Initial.designer.cs">
       <DependentUpon>20230120162734_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230412210655_remove_active.cs" />
+    <Compile Include="Migrations\20230412210655_remove_active.designer.cs">
+      <DependentUpon>20230412210655_remove_active.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20230412210742_isActiveBool.cs" />
+    <Compile Include="Migrations\20230412210742_isActiveBool.designer.cs">
+      <DependentUpon>20230412210742_isActiveBool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
     <Compile Include="PortfolioDbContext.cs" />
     <Compile Include="Models\User.cs" />

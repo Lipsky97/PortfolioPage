@@ -175,13 +175,16 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Registration.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -197,6 +200,7 @@
     <Content Include="Views\Welcome\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -209,6 +213,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portfolio.Repository\Portfolio.Repository.csproj">
+      <Project>{5821C842-A68B-47C2-BB50-5A33E2FC3715}</Project>
+      <Name>Portfolio.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portfolio.Service\Portfolio.Service.csproj">
       <Project>{b324c40d-d612-464f-bb04-6a4fb04d3712}</Project>
       <Name>Portfolio.Service</Name>
