@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Portfolio.DB;
+using Portfolio.Repository.Pictures;
 using Portfolio.Repository.Users;
+using Portfolio.Service.Pictures;
 using Portfolio.Service.Users;
-using Portfolio.Web.DI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace Portfolio.Web
             var builder = new ContainerBuilder();
             builder.RegisterType<UsersService>().As<IUsersService>();
             builder.RegisterType<UsersRepository>().As<IUsersRepository>();
+            builder.RegisterType<PicturesService>().As<IPicturesService>();
+            builder.RegisterType<PicturesRepository>().As<IPicturesRepository>();
             builder.RegisterType<PortfolioDbContext>().As<PortfolioDbContext>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             var container = builder.Build();

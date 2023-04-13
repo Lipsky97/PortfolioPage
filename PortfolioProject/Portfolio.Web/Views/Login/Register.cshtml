@@ -2,12 +2,24 @@
 @{
     ViewBag.Title = "Register";
 }
-
-<h2>Register</h2>
-@using (Html.BeginForm("RegisterUser", "Login", FormMethod.Post))
-    {
-        <input type="text" name="username" placeholder="Login..." />
-        <input type="text" name="password" placeholder="Password..."/>
-        <input type="text" name="email" placeholder="adam@gmail.com"/>
-        <input type="submit" value="Register" />
-    }
+<link rel="stylesheet" href="~/Content/style.css" />
+<div class="detailsBox">
+    <h2>Register</h2>
+    <div class="input-group">
+        @using (Html.BeginForm("RegisterUser", "Login", FormMethod.Post))
+            {
+            <div class="input-text input-field">
+                <input type="text" name="username" placeholder="Login..." />
+            </div>
+            <div class="input-text input-field">
+                <input type="password" name="password" placeholder="Password..."/>
+            </div> 
+            <div class="input-text input-field">
+                <input type="text" name="email" placeholder="adam@gmail.com"/>
+            </div>
+            <div class="input-button input-field">
+                <input type="submit" value="Register" />
+            </div>
+            }
+    </div>
+</div>

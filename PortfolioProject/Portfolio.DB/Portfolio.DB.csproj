@@ -189,7 +189,12 @@
     <Compile Include="Migrations\20230412210742_isActiveBool.designer.cs">
       <DependentUpon>20230412210742_isActiveBool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230413183226_pictures.cs" />
+    <Compile Include="Migrations\20230413183226_pictures.designer.cs">
+      <DependentUpon>20230413183226_pictures.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
+    <Compile Include="Models\Picture.cs" />
     <Compile Include="PortfolioDbContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

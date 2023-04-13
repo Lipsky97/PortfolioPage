@@ -1,0 +1,164 @@
+﻿@model Portfolio.Web.Models.PictureListVM
+
+@{
+    ViewBag.Title = "Gallery";
+}
+<link rel="stylesheet" href="~/Content/style.css" />
+<script>
+    let slideIndex = 1;
+    document.addEventListener("DOMContentLoaded", function (event) {
+        showSlides(slideIndex);
+    });
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("Slide");
+        let dots = document.getElementsByClassName("thumbnail");
+        let captionText = document.getElementById("caption");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+</script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .gallery-container {
+        position: relative;
+    }
+
+    .Slide {
+        display: none;
+        
+    }
+
+    .cursor {
+        cursor: pointer;
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    .image-caption {
+        text-align: center;
+        background-color: #222;
+        padding: 2px 16px;
+        color: white;
+    }
+
+    .column {
+        float: left;
+        width: 5%;
+    }
+
+    .thumbnail {
+        opacity: 0.6;
+    }
+
+    .active,
+    .thumbnail:hover {
+        opacity: 1;
+    }
+</style>
+<h2>Gallery</h2>
+<span>I enjoy taking photos, even though I do not own a professional camera. Here is some of the pictures I am most proud of</span>
+
+@{ 
+    if ((string)Session["userid"] == "")
+    {
+        using (Html.BeginForm("AddPicture", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="input-text input-field">
+                <input type="text" name="name" placeholder="Picture name..." />
+            </div>
+            <div class="input-file input-field">
+                <input type="file" name="data" />
+            </div>
+            <div class="input-button input-field">
+                <input type="submit" value="Upload" />
+            </div>
+        }
+    }
+}
+
+
+<div class="gallery-container">
+    @foreach (var picture in Model.PictureList)
+    {
+        var base64 = Convert.ToBase64String(picture.Data);
+        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+        var number = Model.PictureList.IndexOf(picture)+1;
+            <div class="Slide">
+                <div class="number-text">@number / @Model.NofPictures</div>
+                <img src="@imgSrc" style="width: 100%;"/>
+            </div>
+    }
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <div class="image-caption">
+        <p id="caption"></p>
+    </div>
+
+    <div class="row">
+        @foreach(var picture in Model.PictureList)
+        {
+            var base64 = Convert.ToBase64String(picture.Data);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            var number = Model.PictureList.IndexOf(picture)+1;
+            <div class="column">
+                <img class="thumbnail cursor" src="@imgSrc" style="width: 100%;" alt="@picture.Name" onclick="currentSlide(@number)" />
+            </div>
+        }
+    </div>
+</div>
+
+

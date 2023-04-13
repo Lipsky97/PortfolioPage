@@ -2,17 +2,27 @@
 @{
     ViewBag.Title = "Login";
 }
+<link rel="stylesheet" href="~/Content/style.css" />
+<div class="detailsBox">
+    <h2>Login</h2>
+    <div class="input-group">
+        <span class="login-hint" style="display: none;">Incorrect username, or password</span>
 
-<h2>Login</h2>
-
-<p>Hello madafaka</p>
-
-@using(Html.BeginForm("LoginUser", "Login", FormMethod.Get))
-    {
-        <input type="text" name="username" />
-        <input type="text" name="password" />
-        <input type="submit" value="Login" />
-    }
-
-<p>@Html.ActionLink("Register as a new user!", "Register", "Login")</p>
+        @using(Html.BeginForm("LoginUser", "Login", FormMethod.Get))
+        {
+            <div class="input-text input-field">
+                <input type="text" name="username" placeholder="Username..."/>
+            </div>
+            <div class="input-text input-field">
+                <input type="password" name="password" placeholder="Password..."/>
+            </div>
+            <div class="input-button input-field">
+                <input type="submit" value="Login" />
+            </div>
+        }
+    </div>
+    <div class="register-link">
+        <span>@Html.ActionLink("Register as a new user!", "Register", "Login")</span>
+    </div>
+</div>
 

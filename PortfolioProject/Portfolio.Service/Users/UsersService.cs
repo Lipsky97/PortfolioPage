@@ -14,6 +14,7 @@ namespace Portfolio.Service.Users
         UserVD GetBySid(string sid);
         UserVD GetByUsername(string userName);
         List<UserVD> GetAll();
+        Result Delete(string sid);
     }
 
     public class UsersService : IUsersService
@@ -53,6 +54,11 @@ namespace Portfolio.Service.Users
                 ProfilePic = userEntity.ProfilePic
             };
             return result;
+        }
+
+        public Result Delete(string sid)
+        {
+            return _usersRepository.Delete(sid);
         }
 
         public UserVD GetByUsername(string userName)

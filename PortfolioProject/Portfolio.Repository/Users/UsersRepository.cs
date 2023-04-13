@@ -1,4 +1,5 @@
-﻿using Portfolio.DB;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Portfolio.DB;
 using Portfolio.DB.Models;
 using Portfolio.Repository.Users.Model;
 using System;
@@ -15,6 +16,7 @@ namespace Portfolio.Repository.Users
         User GetBySid(string sid);
         User GetByUsername(string userName);
         List<User> GetAll();
+        Result Delete(string sid);
     }
     public class UsersRepository : IUsersRepository
     {
@@ -32,7 +34,7 @@ namespace Portfolio.Repository.Users
                 Password = password,
                 Email = email,
                 Sid = Guid.NewGuid().ToString(),
-                //IsActive = true
+                IsActive = true
             };
 
             try
@@ -51,8 +53,8 @@ namespace Portfolio.Repository.Users
         {
             try
             {
-                //var user = _db.Users.FirstOrDefault(x => (x.UserName == userName || x.Email == userName) && x.Password == password && x.IsActive == true);
-                var user = _db.Users.FirstOrDefault(x => (x.UserName == userName || x.Email == userName) && x.Password == password);
+                var user = _db.Users.FirstOrDefault(x => (x.UserName == userName || x.Email == userName) && x.Password == password && x.IsActive == true);
+                
                 if (user == null)
                 {
                     return new Result() { IsSuccess = false, Message = "User does not exist" };
@@ -92,12 +94,27 @@ namespace Portfolio.Repository.Users
             }
         }
 
+        public Result Delete(string sid)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.Sid== sid);
+            if (user == null)
+            {
+                return new Result() { IsSuccess = false, Message = "User doesn't exist" };
+            }
+
+            user.IsActive= false;
+
+            _db.Update(user);
+            _db.SaveChanges();
+            return new Result() { IsSuccess = true };
+        }
+
         public User GetBySid(string sid)
         {
             try
             {
-                //var user = _db.Users.FirstOrDefault(x => x.Sid == sid && x.IsActive == true);
-                var user = _db.Users.FirstOrDefault(x => x.Sid == sid);
+                var user = _db.Users.FirstOrDefault(x => x.Sid == sid && x.IsActive == true);
+                
                 if (user == null)
                 {
                     return null;
@@ -114,8 +131,8 @@ namespace Portfolio.Repository.Users
         {
             try
             {
-                //var user = _db.Users.FirstOrDefault(x => x.UserName == userName && x.IsActive == true);
-                var user = _db.Users.FirstOrDefault(x => x.UserName == userName);
+                var user = _db.Users.FirstOrDefault(x => x.UserName == userName && x.IsActive == true);
+                
                 if (user == null)
                 {
                     return null;
