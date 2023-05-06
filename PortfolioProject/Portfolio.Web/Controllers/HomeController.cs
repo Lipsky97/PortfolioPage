@@ -1,10 +1,12 @@
-﻿using Portfolio.Repository.CVs.Model;
+﻿using Microsoft.Ajax.Utilities;
+using Portfolio.Repository.CVs.Model;
 using Portfolio.Service.CVs;
 using Portfolio.Service.Pictures;
 using Portfolio.Service.Users;
 using Portfolio.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -95,6 +97,12 @@ namespace Portfolio.Web.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult GetCVToDisplay()
+        {
+            var cv = _cvsService.GetLatestCV();
+            return new FileContentResult(cv.File, "application/pdf");
         }
 
         public ActionResult DownloadLatestCV()

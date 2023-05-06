@@ -9,10 +9,10 @@ namespace Portfolio.Service.Users
     public interface IUsersService
     {
         bool Create(string userName, string password, string email);
-        string Authenticate(string userName, string password);
+        string Authenticate(string email, string password);
         Result Update(string sid, string newUsername, string newPassword, string newEmail);
         UserVD GetBySid(string sid);
-        UserVD GetByUsername(string userName);
+        UserVD GetByEmail(string email);
         List<UserVD> GetAll();
         Result Delete(string sid);
         bool IsAdmin(string sid);
@@ -28,14 +28,26 @@ namespace Portfolio.Service.Users
 
         public bool Create(string userName, string password, string email)
         {
-            var result = _usersRepository.Create(userName, password, email);
+            var hashedPassword = PasswordHasherService.HashPassword(password);
+            var user = GetByEmail(email);
+            if (user != null)
+            {
+                return false;
+            }
+            var result = _usersRepository.Create(userName, hashedPassword, email);
             return result.IsSuccess;
         }
 
-        public string Authenticate(string userName, string password)
+        public string Authenticate(string email, string password)
         {
-            var result = _usersRepository.Authenticate(userName, password);
-            return result.Message;
+            var user = _usersRepository.GetByEmail(email);
+            if (user == null) return null;
+            bool result = PasswordHasherService.VerifyPassword(password, user.Password);
+
+            if (result)
+                return user.Sid;
+            else
+                return null;
         }
 
         public Result Update(string sid, string newUsername, string newPassword, string newEmail) 
@@ -70,9 +82,10 @@ namespace Portfolio.Service.Users
             return _usersRepository.Delete(sid);
         }
 
-        public UserVD GetByUsername(string userName)
+        public UserVD GetByEmail(string email)
         {
-            var userEntity = _usersRepository.GetByUsername(userName);
+            var userEntity = _usersRepository.GetByEmail(email);
+            if (userEntity == null) return null;
             var result = new UserVD()
             {
                 Sid = new Guid(userEntity.Sid),

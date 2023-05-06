@@ -38,7 +38,7 @@ namespace Portfolio.Web.Controllers
                 ViewBag.Message = "Failed to change account details";
             }
 
-            return View();
+            return View("Settings");
         }
     }
 }

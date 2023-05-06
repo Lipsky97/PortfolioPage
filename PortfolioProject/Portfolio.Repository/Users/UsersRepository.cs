@@ -14,7 +14,7 @@ namespace Portfolio.Repository.Users
         Result Authenticate(string userName, string password);
         Result Update(string sid, string newUserName = "", string newPassword = "", string newEmail = "");
         User GetBySid(string sid);
-        User GetByUsername(string userName);
+        User GetByEmail(string userName);
         List<User> GetAll();
         Result Delete(string sid);
     }
@@ -49,11 +49,11 @@ namespace Portfolio.Repository.Users
             }
         }
 
-        public Result Authenticate(string userName, string password)
+        public Result Authenticate(string email, string password)
         {
             try
             {
-                var user = _db.Users.FirstOrDefault(x => (x.UserName == userName || x.Email == userName) && x.Password == password && x.IsActive == true);
+                var user = _db.Users.FirstOrDefault(x => x.Email == email && x.IsActive == true);
                 
                 if (user == null)
                 {
@@ -61,7 +61,7 @@ namespace Portfolio.Repository.Users
                 }
                 else
                 {
-                    return new Result() { IsSuccess = true, Message = user.Sid };
+                    return new Result() { IsSuccess = true, Message = user.Sid, Message2 = user.Password };
                 }
             }
             catch (Exception ex)
@@ -127,11 +127,11 @@ namespace Portfolio.Repository.Users
             }
         }
 
-        public User GetByUsername(string userName)
+        public User GetByEmail(string email)
         {
             try
             {
-                var user = _db.Users.FirstOrDefault(x => x.UserName == userName && x.IsActive == true);
+                var user = _db.Users.FirstOrDefault(x => x.Email == email && x.IsActive == true);
                 
                 if (user == null)
                 {

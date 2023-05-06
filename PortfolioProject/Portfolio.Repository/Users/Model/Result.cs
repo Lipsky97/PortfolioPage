@@ -10,5 +10,6 @@ namespace Portfolio.Repository.Users.Model
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public string Message2 { get; set; }
     }
 }

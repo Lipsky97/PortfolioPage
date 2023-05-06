@@ -5,13 +5,13 @@
 <link rel="stylesheet" href="~/Content/style.css" />
 <div class="detailsBox">
     <h2>Login</h2>
+        <span style="color: red;">@ViewBag.Message</span>
     <div class="input-group">
-        <span class="login-hint" style="display: none;">Incorrect username, or password</span>
 
         @using(Html.BeginForm("LoginUser", "Login", FormMethod.Get))
         {
             <div class="input-text input-field">
-                <input type="text" name="username" placeholder="Username..."/>
+                <input type="text" name="email" placeholder="E-mail..."/>
             </div>
             <div class="input-text input-field">
                 <input type="password" name="password" placeholder="Password..."/>

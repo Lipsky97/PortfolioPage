@@ -3,6 +3,17 @@
     ViewBag.Title = "CV";
 }
 <link rel="stylesheet" href="~/Content/style.css" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        $("#pdfLoading").show();
+
+        $("iframe").on("load", function () {
+            $("#pdfLoading").hide();
+            $("#pdfViewer").show();
+        });
+    });
+</script>
 
 <h2>CV</h2>
 @{ 
@@ -21,7 +32,44 @@
     }
 }
 
-<div>
-    @Html.ActionLink("Download CV", "DownloadLatestCV");
+<div id="pdfViewer">
+    <iframe src="@Url.Action("GetCVToDisplay")" width="100%" height="1000"></iframe>
 </div>
 
+<div id="pdfLoading">
+    <h1>LOADING...</h1>
+</div>
+<div id="">
+    @Html.ActionLink("Download CV", "DownloadLatestCV", "Home", null, new {@class = "download-button"})
+</div>
+
+<style>
+    .download-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .download-button:hover {
+        background-color: #0062cc;
+        color: #fff;
+    }
+
+    #pdfViewer {
+        display: none;
+    }
+
+    #pdfLoading {
+        display: block;
+        text-align: center;
+        margin: 50px 0;
+    }
+</style>

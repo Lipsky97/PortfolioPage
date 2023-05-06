@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="~/Content/style.css" />
 <div class="detailsBox">
     <h2>Register</h2>
+    <span style="color: red;">@ViewBag.Message</span>
     <div class="input-group">
         @using (Html.BeginForm("RegisterUser", "Login", FormMethod.Post))
             {
