@@ -1,4 +1,7 @@
-﻿using Portfolio.Service.Pictures;
+﻿using Portfolio.Repository.CVs.Model;
+using Portfolio.Service.CVs;
+using Portfolio.Service.Pictures;
+using Portfolio.Service.Users;
 using Portfolio.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +15,14 @@ namespace Portfolio.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IPicturesService _picturesService;
+        private readonly IUsersService _usersService;
+        private readonly ICVsService _cvsService;
 
-        public HomeController(IPicturesService picturesService)
+        public HomeController(IPicturesService picturesService, IUsersService usersService, ICVsService cVsService)
         {
             _picturesService = picturesService;
+            _usersService = usersService;
+            _cvsService = cVsService;
         }
         public ActionResult Index()
         {
@@ -24,6 +31,7 @@ namespace Portfolio.Web.Controllers
 
         public ActionResult Gallery()
         {
+            ViewBag.isAdmin = _usersService.IsAdmin((string)Session["userid"]);
             ViewBag.Message = "Your application description page.";
             var pictures = _picturesService.GetAll();
             var result = new List<PictureVM>();
@@ -54,13 +62,49 @@ namespace Portfolio.Web.Controllers
 
         public ActionResult CV()
         {
+            ViewBag.IsAdmin = _usersService.IsAdmin((string)Session["userid"]);
             return View();
+        }
+
+        public ActionResult UploadCV(HttpPostedFileBase data)
+        {
+            if (data != null && data.ContentLength > 0 && data.ContentType == "application/pdf")
+            {
+                try
+                {
+                    byte[] file;
+                    using (var br = new BinaryReader(data.InputStream))
+                    {
+                        file = br.ReadBytes(data.ContentLength);
+                        var cv = new CVVM
+                        {
+                            File = file,
+                        };
+                        _cvsService.AddCV(cv);
+                        return View("CV");
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    ViewBag.Message = "Error: " + ex.Message;
+                }
+            }
+            else
+            {
+                ViewBag.Message = "Please select a PDF file first";
+            }
+
+            return View();
+        }
+
+        public ActionResult DownloadLatestCV()
+        {
+            var cv = _cvsService.GetLatestCV();
+            return File(cv.File, "application/pdf", "Oskar_Lipienski_CV.pdf");
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

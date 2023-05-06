@@ -30,10 +30,10 @@ namespace Portfolio.Web.Controllers
         public ActionResult LoginUser(string username, string password)
         {
             var all = _usersService.GetAll();
-            bool isAuthenticated = _usersService.Authenticate(username, password);
-            if (isAuthenticated)
+            string isAuthenticated = _usersService.Authenticate(username, password);
+            if (isAuthenticated != null || isAuthenticated != "")
             {
-                Session["userid"] = "";
+                Session["userid"] = isAuthenticated;
                 return RedirectToAction("Index", "Home");
             }
             else

@@ -121,6 +121,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CVs\CVsRepository.cs" />
+    <Compile Include="CVs\Model\CVVM.cs" />
     <Compile Include="Pictures\Model\PictureVM.cs" />
     <Compile Include="Pictures\PicturesRepository.cs" />
     <Compile Include="Users\Model\Result.cs" />

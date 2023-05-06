@@ -112,7 +112,7 @@
 <span>I enjoy taking photos, even though I do not own a professional camera. Here is some of the pictures I am most proud of</span>
 
 @{ 
-    if ((string)Session["userid"] == "")
+    if ((bool)ViewBag.isAdmin)
     {
         using (Html.BeginForm("AddPicture", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {

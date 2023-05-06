@@ -2,6 +2,26 @@
 @{
     ViewBag.Title = "CV";
 }
+<link rel="stylesheet" href="~/Content/style.css" />
 
 <h2>CV</h2>
+@{ 
+    if ((bool)ViewBag.IsAdmin)
+    {
+        using (Html.BeginForm("UploadCV", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="input-file input-field">
+                <input type="file" name="data" />
+            </div>
+
+            <div class="input-button inpit-filed">
+                <input type="submit" value="Upload" />
+            </div>
+        }
+    }
+}
+
+<div>
+    @Html.ActionLink("Download CV", "DownloadLatestCV");
+</div>
 

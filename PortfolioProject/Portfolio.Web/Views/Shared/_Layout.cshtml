@@ -44,6 +44,7 @@
             @{
                 if (Session["userid"] != null)
                 {
+                    <li style="float: right;">@Html.ActionLink("Account Settings", "Settings", "Users")</li>
                     <li style="float: right;">@Html.ActionLink("Logout", "Logout", "Login")</li>
                 }
                 else
@@ -53,38 +54,6 @@
             }
         </ul>
     </div>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Oskar Lipieński", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Gallery", "Gallery", "Home")</li>
-                        <li>@Html.ActionLink("CV", "CV", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    <ul class="navbar-nav nav pull-right">
-                        @{
-                            if (Session["userid"] != null)
-                            {
-                                <li>@Html.ActionLink("Logout", "Logout", "Login");</li>
-                            }
-                            else
-                            {
-                                <li>@Html.ActionLink("Login", "Login", "Login")</li>
-                            }
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>*@
     <div class="container body-content">
         @RenderBody()
         <hr />

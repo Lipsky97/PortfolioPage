@@ -193,7 +193,16 @@
     <Compile Include="Migrations\20230413183226_pictures.designer.cs">
       <DependentUpon>20230413183226_pictures.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230506140133_addAdminFlag.cs" />
+    <Compile Include="Migrations\20230506140133_addAdminFlag.designer.cs">
+      <DependentUpon>20230506140133_addAdminFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20230506154135_CVsTable.cs" />
+    <Compile Include="Migrations\20230506154135_CVsTable.designer.cs">
+      <DependentUpon>20230506154135_CVsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
+    <Compile Include="Models\CV.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="PortfolioDbContext.cs" />
     <Compile Include="Models\User.cs" />

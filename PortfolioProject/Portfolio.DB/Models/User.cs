@@ -12,6 +12,7 @@ namespace Portfolio.DB.Models
     {
         [Key] public string Sid { get; set; }
         public string UserName { get; set; }
+        public bool IsAdmin { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string ProfilePic { get; set; }

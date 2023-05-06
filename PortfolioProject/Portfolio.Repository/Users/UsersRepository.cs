@@ -12,7 +12,7 @@ namespace Portfolio.Repository.Users
     {
         Result Create(string userName, string password, string email);
         Result Authenticate(string userName, string password);
-        Result Update(string userName, string password, string email, string newUserName = "", string newPassword = "", string newEmail = "");
+        Result Update(string sid, string newUserName = "", string newPassword = "", string newEmail = "");
         User GetBySid(string sid);
         User GetByUsername(string userName);
         List<User> GetAll();
@@ -61,7 +61,7 @@ namespace Portfolio.Repository.Users
                 }
                 else
                 {
-                    return new Result() { IsSuccess = true };
+                    return new Result() { IsSuccess = true, Message = user.Sid };
                 }
             }
             catch (Exception ex)
@@ -70,17 +70,17 @@ namespace Portfolio.Repository.Users
             }
         }
 
-        public Result Update(string userName, string password, string email, string newUserName = "", string newPassword = "", string newEmail = "")
+        public Result Update(string sid, string newUserName = "", string newPassword = "", string newEmail = "")
         {
-            var user = _db.Users.FirstOrDefault(x => x.UserName == userName);
+            var user = _db.Users.FirstOrDefault(x => x.Sid == sid);
             if (user == null)
             {
                 return new Result() { IsSuccess = false, Message = "User doesn't exist" };
             }
 
-            user.UserName = (newUserName != String.Empty || newUserName != null) ? newUserName : userName;
-            user.Password = (newPassword != "" || newPassword != null) ? newPassword : password;
-            user.Email = (newEmail != "" || newEmail != null) ? newEmail : email;
+            user.UserName = (newUserName != String.Empty && newUserName != null) ? newUserName : user.UserName;
+            user.Password = (newPassword != "" && newPassword != null) ? newPassword : user.Password;
+            user.Email = (newEmail != "" && newEmail != null) ? newEmail : user.Email;
 
             try
             {

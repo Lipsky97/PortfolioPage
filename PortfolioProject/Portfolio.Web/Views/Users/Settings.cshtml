@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+}
+<link rel="stylesheet" href="~/Content/style.css" />
+<div class="detailsBox">
+    <h2>Settings</h2>
+
+    <span>@ViewBag.Message</span>
+
+    <div class="input-group">
+        @using (Html.BeginForm("ChangeAccount", "Users", FormMethod.Post))
+            {
+                <div class="input-text input-field">
+                    <input type="text" name="newUsername" placeholder="User name..." />
+                </div>
+                <div class="input-text input-field">
+                    <input type="text" name="newPassword" placeholder="Password..." />
+                </div>
+                <div class="input-text input-field">
+                    <input type="text" name="newEmail" placeholder="E-mail..." />
+                </div>
+                <div class="input-button input-field">
+                    <input type="submit" value="Change" />
+                </div>
+            }
+    </div>
+</div>
+

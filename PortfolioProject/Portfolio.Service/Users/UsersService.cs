@@ -9,12 +9,13 @@ namespace Portfolio.Service.Users
     public interface IUsersService
     {
         bool Create(string userName, string password, string email);
-        bool Authenticate(string userName, string password);
-        Result Update(string userName, string password, string email, string newUsername, string newPassword, string newEmail);
+        string Authenticate(string userName, string password);
+        Result Update(string sid, string newUsername, string newPassword, string newEmail);
         UserVD GetBySid(string sid);
         UserVD GetByUsername(string userName);
         List<UserVD> GetAll();
         Result Delete(string sid);
+        bool IsAdmin(string sid);
     }
 
     public class UsersService : IUsersService
@@ -31,15 +32,15 @@ namespace Portfolio.Service.Users
             return result.IsSuccess;
         }
 
-        public bool Authenticate(string userName, string password)
+        public string Authenticate(string userName, string password)
         {
             var result = _usersRepository.Authenticate(userName, password);
-            return result.IsSuccess;
+            return result.Message;
         }
 
-        public Result Update(string userName, string password, string email, string newUsername, string newPassword, string newEmail) 
+        public Result Update(string sid, string newUsername, string newPassword, string newEmail) 
         {
-            var result = _usersRepository.Update(userName, password, email, newUsername, newPassword, newEmail);
+            var result = _usersRepository.Update(sid, newUsername, newPassword, newEmail);
             return result;
         }
 
@@ -51,9 +52,17 @@ namespace Portfolio.Service.Users
                 Sid = new Guid(userEntity.Sid),
                 UserName = userEntity.UserName,
                 Email= userEntity.Email,
+                IsAdmin = userEntity.IsAdmin,
                 ProfilePic = userEntity.ProfilePic
             };
             return result;
+        }
+
+        public bool IsAdmin(string sid)
+        {
+            if (sid == null || sid == "") return false;
+            var user = GetBySid(sid);
+            return user.IsAdmin;
         }
 
         public Result Delete(string sid)

@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Portfolio.DB;
+using Portfolio.Repository.CVs;
 using Portfolio.Repository.Pictures;
 using Portfolio.Repository.Users;
+using Portfolio.Service.CVs;
 using Portfolio.Service.Pictures;
 using Portfolio.Service.Users;
 using System;
@@ -26,9 +28,11 @@ namespace Portfolio.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             var builder = new ContainerBuilder();
+            builder.RegisterType<CVsService>().As<ICVsService>();
             builder.RegisterType<UsersService>().As<IUsersService>();
-            builder.RegisterType<UsersRepository>().As<IUsersRepository>();
             builder.RegisterType<PicturesService>().As<IPicturesService>();
+            builder.RegisterType<UsersRepository>().As<IUsersRepository>();
+            builder.RegisterType<CVsRepository>().As<ICVsRepository>();
             builder.RegisterType<PicturesRepository>().As<IPicturesRepository>();
             builder.RegisterType<PortfolioDbContext>().As<PortfolioDbContext>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);

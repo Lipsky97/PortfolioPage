@@ -7,6 +7,7 @@ namespace Portfolio.DB
     {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<CV> CVs { get; set; }
 
         public PortfolioDbContext() 
         {
