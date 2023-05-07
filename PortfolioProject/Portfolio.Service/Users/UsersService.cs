@@ -52,6 +52,11 @@ namespace Portfolio.Service.Users
 
         public Result Update(string sid, string newUsername, string newPassword, string newEmail) 
         {
+            
+            if (newPassword != null && newPassword != "")
+            {
+                newPassword = PasswordHasherService.HashPassword(newPassword);
+            }
             var result = _usersRepository.Update(sid, newUsername, newPassword, newEmail);
             return result;
         }
