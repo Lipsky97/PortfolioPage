@@ -19,6 +19,20 @@
     .image-grid {
         text-align: center;
     }
+
+    .add-view-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 </style>
 
 <div class="section portfolio">
@@ -28,7 +42,7 @@
         @foreach (var image in Model)
         {
             <div class="image-item">
-                <a href="@image.LinkUrl"><img src="@image.PictureURL" style="width: 300px; height: auto;" /></a>
+                <a href="@image.LinkUrl"><img src="data:image/jpg;base64,@image.PictureURL" style="width: 300px; height: auto;" /></a>
                 <div class="image-item-link">
                     <p>@image.LinkText</p>
                 </div>
@@ -36,3 +50,7 @@
         }
     </div>
 </div>
+@if ((bool)ViewBag.IsAdmin)
+{
+    @Html.ActionLink("Add New Project", "AddPortfolioView", "Portfolio", null, new {@class = "add-view-button"})
+}

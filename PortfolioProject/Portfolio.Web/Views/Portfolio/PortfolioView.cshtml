@@ -8,6 +8,6 @@
 @foreach (var image in Model.PictureURLs)
 {
     <div class="project-image">
-        <img src="@image" />
+        <img src="data:image/jpg;base64,@image" />
     </div>
 }

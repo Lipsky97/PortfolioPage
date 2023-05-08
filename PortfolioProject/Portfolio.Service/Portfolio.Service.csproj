@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="CVs\CVsService.cs" />
     <Compile Include="Pictures\PicturesService.cs" />
+    <Compile Include="PortfolioView\PortfolioViewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\Model\UserVD.cs" />
     <Compile Include="Users\PasswordHasherService.cs" />

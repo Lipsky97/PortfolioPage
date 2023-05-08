@@ -201,6 +201,10 @@
     <Compile Include="Migrations\20230506154135_CVsTable.designer.cs">
       <DependentUpon>20230506154135_CVsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230508165656_portfolioSiteTemplates.cs" />
+    <Compile Include="Migrations\20230508165656_portfolioSiteTemplates.designer.cs">
+      <DependentUpon>20230508165656_portfolioSiteTemplates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
     <Compile Include="Models\CV.cs" />
     <Compile Include="Models\Picture.cs" />

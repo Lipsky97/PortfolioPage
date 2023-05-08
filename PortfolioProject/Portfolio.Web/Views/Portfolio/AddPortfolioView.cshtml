@@ -1,0 +1,59 @@
+﻿@model Portfolio.Web.Models.AddPortfolioViewVM
+@{
+    ViewBag.Title = "AddPortfolioView";
+}
+
+<link rel="stylesheet" href="~/Content/style.css" />
+<style>
+    img {
+        width: 300px;
+        padding: 10px;
+    }
+</style>
+<script>
+    function previewPictures() {
+        var picturesInput = document.getElementById("pictures-input");
+        var picturesPreview = document.getElementById("picture-preview");
+        picturesPreview.innerHTML = "";
+
+        for (var i = 0; i < picturesInput.files.length; i++) {
+            var file = picturesInput.files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var img = document.createElement("img");
+                img.src = event.target.result;
+                picturesPreview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+
+<div class="detailsBox">
+    <h2>Add new portfolio view</h2>
+    <div class="input-group">
+        @using (Html.BeginForm("UploadPortfolioView", "Portfolio", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="input-text input-field">
+                <input type="text" name="Name" placeholder="Name..." />
+            </div>
+            <div class="input-text input-field">
+                <input type="text" name="Description" placeholder="Desc..." />
+            </div>
+            <div class="input-text input-field">
+                <input type="number" name="MainPictureIndex" placeholder="Index of main picture" min="0" />
+            </div>
+            <div class="input-file input-field">
+                <input type="file" id="pictures-input" name="Pictures" onchange="previewPictures()" multiple />
+            </div>
+            <div class="input-button input-field">
+                <input type="submit" value="Upload" />
+            </div>
+        }
+    </div>
+</div>
+<div id="picture-preview"></div>
+

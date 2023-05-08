@@ -210,6 +210,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddPortfolioViewVM.cs" />
     <Compile Include="Models\PictureListVM.cs" />
     <Compile Include="Models\PictureVM.cs" />
     <Compile Include="Models\PortfolioGridVM.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Views\Users\Settings.cshtml" />
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Portfolio\PortfolioView.cshtml" />
+    <Content Include="Views\Portfolio\AddPortfolioView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
