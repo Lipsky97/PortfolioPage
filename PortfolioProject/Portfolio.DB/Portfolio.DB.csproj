@@ -204,6 +204,8 @@
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
     <Compile Include="Models\CV.cs" />
     <Compile Include="Models\Picture.cs" />
+    <Compile Include="Models\PortfolioPicture.cs" />
+    <Compile Include="Models\PortfolioProject.cs" />
     <Compile Include="PortfolioDbContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

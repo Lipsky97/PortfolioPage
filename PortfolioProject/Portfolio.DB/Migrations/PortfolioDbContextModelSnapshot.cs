@@ -51,6 +51,40 @@ namespace Portfolio.DB.Migrations
                     b.ToTable("Pictures");
                 });
 
+            modelBuilder.Entity("Portfolio.DB.Models.PortfolioPicture", b =>
+                {
+                    b.Property<string>("Sid")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Sid");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("PortfolioPictures");
+                });
+
+            modelBuilder.Entity("Portfolio.DB.Models.PortfolioProject", b =>
+                {
+                    b.Property<string>("Sid")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Sid");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("Portfolio.DB.Models.User", b =>
                 {
                     b.Property<string>("Sid")
@@ -77,6 +111,13 @@ namespace Portfolio.DB.Migrations
                     b.HasKey("Sid");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Portfolio.DB.Models.PortfolioPicture", b =>
+                {
+                    b.HasOne("Portfolio.DB.Models.PortfolioProject", null)
+                        .WithMany("Pictures")
+                        .HasForeignKey("ProjectId");
                 });
 #pragma warning restore 612, 618
         }

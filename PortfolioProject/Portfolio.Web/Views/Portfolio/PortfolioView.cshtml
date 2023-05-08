@@ -1,0 +1,13 @@
+﻿@model Portfolio.Web.Models.PortfolioViewVM
+@{
+    ViewBag.Title = "PortfolioView";
+}
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+@foreach (var image in Model.PictureURLs)
+{
+    <div class="project-image">
+        <img src="@image" />
+    </div>
+}

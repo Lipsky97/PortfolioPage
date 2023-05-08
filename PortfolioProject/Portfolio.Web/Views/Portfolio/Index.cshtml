@@ -1,0 +1,38 @@
+﻿@model List<Portfolio.Web.Models.PortfolioGridVM>
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .image-item {
+        text-align: center;
+        display: inline-block;
+        margin: 15px;
+    }
+
+    .rowContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image-grid {
+        text-align: center;
+    }
+</style>
+
+<div class="section portfolio">
+    <h2>Portfolio</h2>
+    <p>Here are some projects I've been working on, and simple utility tools I have created:</p>
+    <div class="image-grid">
+        @foreach (var image in Model)
+        {
+            <div class="image-item">
+                <a href="@image.LinkUrl"><img src="@image.PictureURL" style="width: 300px; height: auto;" /></a>
+                <div class="image-item-link">
+                    <p>@image.LinkText</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

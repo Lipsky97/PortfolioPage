@@ -28,7 +28,9 @@ namespace Portfolio.Web.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var portfolioGridData = GetPortfolioGridData();
+
+            return View(portfolioGridData);
         }
 
         public ActionResult Gallery()
@@ -114,6 +116,24 @@ namespace Portfolio.Web.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        private List<PortfolioGridVM> GetPortfolioGridData()
+        {
+            var result = new List<PortfolioGridVM>();
+            var newP = new PortfolioGridVM()
+            {
+                PictureURL = Url.Content("~/App_Images/ImageGrid/548651_325519860836288_650402660_n.jpg"),
+                AltText = "Hyhy",
+                LinkText = "Przykładowy tytuł projektu",
+                LinkUrl = Url.Action("CV")
+            };
+            result.Add(newP);
+            result.Add(newP);
+            result.Add(newP);
+            result.Add(newP);
+            result.Add(newP);
+            return result;
         }
     }
 }
