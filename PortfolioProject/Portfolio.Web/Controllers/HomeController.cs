@@ -1,7 +1,9 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Portfolio.DB.Models;
 using Portfolio.Repository.CVs.Model;
 using Portfolio.Service.CVs;
 using Portfolio.Service.Pictures;
+using Portfolio.Service.PortfolioView;
 using Portfolio.Service.Users;
 using Portfolio.Web.Models;
 using System;
@@ -19,18 +21,20 @@ namespace Portfolio.Web.Controllers
         private readonly IPicturesService _picturesService;
         private readonly IUsersService _usersService;
         private readonly ICVsService _cvsService;
+        private readonly IPortfolioViewService _portfolioViewService;
 
-        public HomeController(IPicturesService picturesService, IUsersService usersService, ICVsService cVsService)
+        public HomeController(IPicturesService picturesService, IUsersService usersService, ICVsService cVsService, IPortfolioViewService portfolioViewService)
         {
             _picturesService = picturesService;
             _usersService = usersService;
             _cvsService = cVsService;
+            _portfolioViewService = portfolioViewService;
         }
         public ActionResult Index()
         {
-            var portfolioGridData = GetPortfolioGridData();
-
-            return View(portfolioGridData);
+            var data = _portfolioViewService.GetPortfolioProjectList();
+            var model = GetPortfolioGridData(data);
+            return View(model);
         }
 
         public ActionResult Gallery()
@@ -118,21 +122,21 @@ namespace Portfolio.Web.Controllers
             return View();
         }
 
-        private List<PortfolioGridVM> GetPortfolioGridData()
+        private List<PortfolioGridVM> GetPortfolioGridData(List<PortfolioProject> data)
         {
             var result = new List<PortfolioGridVM>();
-            var newP = new PortfolioGridVM()
+            foreach (var p in data)
             {
-                PictureURL = Url.Content("~/App_Images/ImageGrid/548651_325519860836288_650402660_n.jpg"),
-                AltText = "Hyhy",
-                LinkText = "Przykładowy tytuł projektu",
-                LinkUrl = Url.Action("CV")
-            };
-            result.Add(newP);
-            result.Add(newP);
-            result.Add(newP);
-            result.Add(newP);
-            result.Add(newP);
+                var newP = new PortfolioGridVM()
+                {
+                    PictureURL = Convert.ToBase64String(p.Pictures.FirstOrDefault(x => x.IsMainPicture).Data),
+                    AltText = "",
+                    LinkText = p.Name,
+                    LinkUrl = Url.Action("PortfolioView", "Portfolio", new { portfolioSid = $"{p.Sid}" })
+                };
+
+                result.Add(newP);
+            }
             return result;
         }
     }

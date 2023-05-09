@@ -203,6 +203,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AboutmeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -218,19 +219,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Images\AboutMe\20230507_163440.jpg" />
     <Content Include="App_Images\FrontPage\20230507_163433.jpg" />
-    <Content Include="App_Images\ImageGrid\20181008_132839.jpg" />
-    <Content Include="App_Images\ImageGrid\20181018_142046.jpg" />
-    <Content Include="App_Images\ImageGrid\20181018_154515.jpg" />
-    <Content Include="App_Images\ImageGrid\20181019_153730.jpg" />
-    <Content Include="App_Images\ImageGrid\548651_325519860836288_650402660_n.jpg" />
-    <Content Include="App_Images\ImageGrid\DSC_0226.JPG" />
-    <Content Include="App_Images\ImageGrid\DSC_0305.JPG" />
-    <Content Include="App_Images\ImageGrid\WP_20140331_14_17_15_Pro20140331141948.jpg" />
-    <Content Include="App_Images\ImageGrid\WP_20140722_009.jpg" />
-    <Content Include="App_Images\ImageGrid\WP_20140728_005 %282%29.jpg" />
-    <Content Include="App_Images\ImageGrid\WP_20150503_20_02_49_Pro.jpg" />
-    <Content Include="App_Images\ImageGrid\WP_20150525_12_53_01_Pro %282%29.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -273,6 +263,7 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Portfolio\PortfolioView.cshtml" />
     <Content Include="Views\Portfolio\AddPortfolioView.cshtml" />
+    <Content Include="Views\Aboutme\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

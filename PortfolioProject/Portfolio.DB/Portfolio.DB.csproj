@@ -205,6 +205,18 @@
     <Compile Include="Migrations\20230508165656_portfolioSiteTemplates.designer.cs">
       <DependentUpon>20230508165656_portfolioSiteTemplates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230509165855_isMainPicture.cs" />
+    <Compile Include="Migrations\20230509165855_isMainPicture.designer.cs">
+      <DependentUpon>20230509165855_isMainPicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20230509173923_ghLink.cs" />
+    <Compile Include="Migrations\20230509173923_ghLink.designer.cs">
+      <DependentUpon>20230509173923_ghLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20230509180308_isActiveProject.cs" />
+    <Compile Include="Migrations\20230509180308_isActiveProject.designer.cs">
+      <DependentUpon>20230509180308_isActiveProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
     <Compile Include="Models\CV.cs" />
     <Compile Include="Models\Picture.cs" />

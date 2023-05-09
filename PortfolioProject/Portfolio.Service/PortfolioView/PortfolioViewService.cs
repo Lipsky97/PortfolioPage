@@ -11,7 +11,7 @@ namespace Portfolio.Service.PortfolioView
 {
     public interface IPortfolioViewService
     {
-        bool Create(string description, string name, List<PortfolioPictureList> pictureList);
+        bool Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pictureList);
         PortfolioProject GetPortfolioProject(string sid);
         List<PortfolioProject> GetPortfolioProjectList();
     }
@@ -23,9 +23,9 @@ namespace Portfolio.Service.PortfolioView
             _portfolioViewRepository = portfolioViewRepository;
         }
 
-        public bool Create(string description, string name, List<PortfolioPictureList> pictureList)
+        public bool Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pictureList)
         {
-            var result = _portfolioViewRepository.Create(description, name, pictureList);
+            var result = _portfolioViewRepository.Create(description, name, hasGHLink, ghLink, pictureList);
             return result.IsSuccess;
         }
 

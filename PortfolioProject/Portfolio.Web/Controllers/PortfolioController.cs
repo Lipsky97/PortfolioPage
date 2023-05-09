@@ -45,6 +45,8 @@ namespace Portfolio.Web.Controllers
                 Description = data.Description,
                 Name = data.Name,
                 Sid = data.Sid,
+                GHLink= data.GHLink,
+                HasGHLink = data.HasGHLink,
                 PictureURLs = pictures
             };
             return View(model);
@@ -62,6 +64,7 @@ namespace Portfolio.Web.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult UploadPortfolioView(AddPortfolioViewVM vm)
         {
             var pictureList = new List<PortfolioPictureList>();
@@ -88,7 +91,11 @@ namespace Portfolio.Web.Controllers
                 }
 
             }
-            var result = _portfolioProjectService.Create(vm.Description, vm.Name, pictureList);
+            if (vm.GHLink != null && vm.GHLink != "") 
+            {
+                vm.HasGHLink = true;
+            }
+            var result = _portfolioProjectService.Create(vm.Description, vm.Name, vm.HasGHLink, vm.GHLink, pictureList);
 
             if (result)
             {
@@ -114,6 +121,8 @@ namespace Portfolio.Web.Controllers
                     LinkText = p.Name,
                     LinkUrl = Url.Action("PortfolioView", "Portfolio", new { portfolioSid = $"{p.Sid}"})
                 };
+
+                result.Add(newP);
             }
             return result;
         }

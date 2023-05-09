@@ -14,7 +14,7 @@ namespace Portfolio.Repository.PortfolioView
 {
     public interface IPortfolioViewRepository
     {
-        Result Create(string description, string name, List<PortfolioPictureList> pics);
+        Result Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pics);
         PortfolioProject GetPortfolioProject(string sid);
         List<PortfolioProject> GetPortfolioProjectList();
     }
@@ -26,7 +26,7 @@ namespace Portfolio.Repository.PortfolioView
             _db= db;
         }
 
-        public Result Create(string description, string name, List<PortfolioPictureList> pics)
+        public Result Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pics)
         {
             var listOfPictures = new List<PortfolioPicture>();
             var newPortfolioView = new PortfolioProject
@@ -34,6 +34,9 @@ namespace Portfolio.Repository.PortfolioView
                 Description = description,
                 Name = name,
                 Pictures = listOfPictures,
+                HasGHLink = hasGHLink,
+                IsActive = true,
+                GHLink = ghLink,
                 Sid = Guid.NewGuid().ToString(),
             };
 
@@ -47,7 +50,7 @@ namespace Portfolio.Repository.PortfolioView
                     IsMainPicture = p.IsMainPicture
                 };
 
-                listOfPictures.Add(newP);
+                newPortfolioView.Pictures.Add(newP);
             }
 
             try
@@ -83,7 +86,10 @@ namespace Portfolio.Repository.PortfolioView
         {
             try
             {
-                var projectList = _db.Projects.Include(p => p.Pictures.Where(x => x.IsMainPicture)).ToList();
+                var projectList = _db.Projects.Where(x => x.IsActive).ToList();
+                var mainPictures = _db.PortfolioPictures.Where(x => x.IsMainPicture);
+
+                var result = BuildPortfolioProjectObj(projectList, mainPictures);
 
                 if (projectList.Count <= 0)
                 {
@@ -95,6 +101,18 @@ namespace Portfolio.Repository.PortfolioView
             {
                 return null;
             }
+        }
+
+        private List<PortfolioProject> BuildPortfolioProjectObj(List<PortfolioProject> projectList, IQueryable<PortfolioPicture> portfolioPictures)
+        {
+            foreach(var project in projectList)
+            {
+                var mainPciture = new List<PortfolioPicture>();
+                mainPciture.Add(portfolioPictures.FirstOrDefault(x => x.ProjectId == project.Sid));
+                project.Pictures = mainPciture;
+            }
+
+            return projectList;
         }
     }
 }

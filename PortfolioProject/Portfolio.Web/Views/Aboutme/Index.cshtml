@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "About me";
+}
+
+<style>
+    .cv-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .section {
+        display: flex;
+    }
+
+    .group-text {
+        flex: 1;
+    }
+
+    .group-image {
+        flex: 1;
+        text-align: right;
+    }
+
+    img {
+        width: 50%;
+    }
+</style>
+
+<div class="section">
+    <div class="group-text">
+        <h2>About me</h2>
+    </div>
+    <div class="group-image" style="padding-top: 20px;">
+        @Html.ActionLink("See my CV", "CV", "Home", null, new { @class = "cv-button" })
+    </div>
+</div>
+<h3>Who I am</h3>
+<div class="section casual">
+    <div class="group-text">
+        <p>Some testing text. Some testing text. Some testing text. Some testing text. Some testing text. 
+        Some testing text. Some testing text. Some testing text. Some testing text. Some testing text. 
+        Some testing text. Some testing text. Some testing text. Some testing text. Some testing text. 
+        Some testing text. Some testing text. Some testing text. </p>
+    </div>
+    <div class="group-image">
+        <img src="~/App_Images/AboutMe/20230507_163440.jpg"/>
+    </div>
+</div>
+<h3>My professional journey</h3>
+<div class="section professional">
+    <div class="group-text">
+        <p>
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text.
+        </p>
+    </div>
+    <div class="group-image">
+        <img src="~/App_Images/AboutMe/20230507_163440.jpg" />
+    </div>
+</div>
+<h3>Things I want to mention</h3>
+<div class="section misc">
+    <div class="group-text">
+        <p>
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text. Some testing text. Some testing text.
+            Some testing text. Some testing text. Some testing text.
+        </p>
+    </div>
+    <div class="group-image">
+        <img src="~/App_Images/AboutMe/20230507_163440.jpg" />
+    </div>
+</div>
+

@@ -59,6 +59,9 @@ namespace Portfolio.DB.Migrations
                     b.Property<byte[]>("Data")
                         .HasColumnType("bytea");
 
+                    b.Property<bool>("IsMainPicture")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ProjectId")
                         .HasColumnType("text");
 
@@ -76,6 +79,15 @@ namespace Portfolio.DB.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<string>("GHLink")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("HasGHLink")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

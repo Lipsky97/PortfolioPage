@@ -45,12 +45,6 @@
         margin: 15px;
     }
 
-    .rowContainer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .image-grid {
         text-align: center;
     }
@@ -70,7 +64,7 @@
         @foreach(var image in Model)
         {
             <div class="image-item">
-                <a href="@image.LinkUrl"><img src="@image.PictureURL" style="width: 300px; height: auto;" /></a>
+                <a href="@image.LinkUrl"><img src="data:image/jpg;base64,@image.PictureURL" style="width: 300px; height: auto;" /></a>
                 <div class="image-item-link">
                     <p>@image.LinkText</p>
                 </div>
@@ -80,5 +74,5 @@
 </div>
 <div class="section cv">
     <h1>About me</h1>
-    @Html.ActionLink("See more!", "CV", "Home", null, new { @class = "go-to-cv-button" })
+    @Html.ActionLink("See more!", "Index", "Aboutme", null, new { @class = "go-to-cv-button" })
 </div>
