@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols;
-using Portfolio.DB.Config;
 using Portfolio.DB.Models;
 using System.Collections.Specialized;
 using System.Configuration;

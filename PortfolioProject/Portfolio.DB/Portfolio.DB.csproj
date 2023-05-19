@@ -178,7 +178,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ConnectionStringconfig.cs" />
     <Compile Include="Migrations\20230120162734_Initial.cs" />
     <Compile Include="Migrations\20230120162734_Initial.designer.cs">
       <DependentUpon>20230120162734_Initial.cs</DependentUpon>
