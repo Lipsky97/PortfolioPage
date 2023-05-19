@@ -1,4 +1,5 @@
-﻿using Portfolio.DB.Models;
+﻿using Portfolio.DB.Migrations;
+using Portfolio.DB.Models;
 using Portfolio.Repository.PortfolioView;
 using Portfolio.Repository.PortfolioView.Model;
 using System;
@@ -14,6 +15,12 @@ namespace Portfolio.Service.PortfolioView
         bool Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pictureList);
         PortfolioProject GetPortfolioProject(string sid);
         List<PortfolioProject> GetPortfolioProjectList();
+        List<PortfolioPicture> GetPortfolioPictures(string projectSid);
+        void AddPictures(List<PortfolioPictureList> pictureList, string projectSid);
+        void UpdateProject(PortfolioProject portfolioProject);
+        void DeleteProject(string portfolioSid);
+        void DeletePicture(string pictureSid);
+        void SetMainImage(string imageSid, string projectSid);
     }
     public class PortfolioViewService : IPortfolioViewService
     {
@@ -43,6 +50,36 @@ namespace Portfolio.Service.PortfolioView
                 result = new List<PortfolioProject>();
             }
             return result;
+        }
+
+        public List<PortfolioPicture> GetPortfolioPictures(string projectSid)
+        {
+            return _portfolioViewRepository.GetPortfolioPictures(projectSid);
+        }
+
+        public void AddPictures(List<PortfolioPictureList> pictureList, string projectSid)
+        {
+            _portfolioViewRepository.AddPictures(pictureList, projectSid);
+        }
+
+        public void UpdateProject(PortfolioProject portfolioProject) 
+        {
+            _portfolioViewRepository.UpdateProject(portfolioProject);
+        }
+
+        public void SetMainImage(string imageSid, string projectSid)
+        {
+            _portfolioViewRepository.SetMainImage(imageSid, projectSid);
+        }
+
+        public void DeleteProject(string portfolioSid)
+        {
+            _portfolioViewRepository.DeleteProject(portfolioSid);
+        }
+
+        public void DeletePicture(string pictureSid) 
+        {
+            _portfolioViewRepository.DeletePicture(pictureSid);
         }
     }
 }

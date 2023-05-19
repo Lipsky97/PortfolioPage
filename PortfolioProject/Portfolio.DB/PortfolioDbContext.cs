@@ -1,5 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols;
+using Portfolio.DB.Config;
 using Portfolio.DB.Models;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Linq;
 
 namespace Portfolio.DB
 {
@@ -25,7 +30,10 @@ namespace Portfolio.DB
         {
             if (optionsBuilder.IsConfigured) { return; }
 
-            optionsBuilder.UseNpgsql("host=portfoliodb.c3giaa8kwm1w.eu-central-1.rds.amazonaws.com;port=5432;user id=lipsky;password=mojabazadanych123;database=postgres;");
+            var settings = ConfigurationManager.GetSection("dbConfigurationStrings") as NameValueCollection;
+            var dic = settings.AllKeys.ToDictionary(k => k, k => settings[k]);
+
+            optionsBuilder.UseNpgsql(dic["connectionString"]);
             base.OnConfiguring(optionsBuilder);
         }
 

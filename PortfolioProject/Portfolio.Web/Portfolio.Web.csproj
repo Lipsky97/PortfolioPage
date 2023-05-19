@@ -215,13 +215,15 @@
     <Compile Include="Models\PictureListVM.cs" />
     <Compile Include="Models\PictureVM.cs" />
     <Compile Include="Models\PortfolioGridVM.cs" />
+    <Compile Include="Models\PortfolioViewEditPictureVM.cs" />
+    <Compile Include="Models\PortfolioViewEditVM.cs" />
     <Compile Include="Models\PortfolioViewVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Images\AboutMe\20230507_163440.jpg" />
     <Content Include="App_Images\AboutMe\345804741_600931068654726_683062920684665036_n.jpg" />
-    <Content Include="App_Images\AboutMe\IMG_1255.JPG" />
+    <Content Include="App_Images\AboutMe\IMG_1255.jpg" />
     <Content Include="App_Images\FrontPage\20230507_163439.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -233,6 +235,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="dbConnectionString.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -266,6 +269,7 @@
     <Content Include="Views\Portfolio\PortfolioView.cshtml" />
     <Content Include="Views\Portfolio\AddPortfolioView.cshtml" />
     <Content Include="Views\Aboutme\Index.cshtml" />
+    <Content Include="Views\Portfolio\PortfolioViewEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

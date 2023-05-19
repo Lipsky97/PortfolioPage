@@ -17,6 +17,12 @@ namespace Portfolio.Repository.PortfolioView
         Result Create(string description, string name, bool hasGHLink, string ghLink, List<PortfolioPictureList> pics);
         PortfolioProject GetPortfolioProject(string sid);
         List<PortfolioProject> GetPortfolioProjectList();
+        List<PortfolioPicture> GetPortfolioPictures(string portfolioSid);
+        void AddPictures(List<PortfolioPictureList> pictureList, string projectSid);
+        void UpdateProject(PortfolioProject project);
+        void DeleteProject(string portfolioSid);
+        void DeletePicture(string pictureSidList);
+        void SetMainImage(string imageSid, string projectSid);
     }
     public class PortfolioViewRepository : IPortfolioViewRepository
     {
@@ -100,6 +106,96 @@ namespace Portfolio.Repository.PortfolioView
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public List<PortfolioPicture> GetPortfolioPictures(string portfolioSid)
+        {
+            return _db.PortfolioPictures.Where(x => x.ProjectId== portfolioSid).ToList();
+        }
+
+        public void AddPictures(List<PortfolioPictureList> pictureList, string projectSid)
+        {
+            var project = _db.Projects.Include(x => x.Pictures).FirstOrDefault(x => x.Sid == projectSid);
+            foreach (var picture in pictureList)
+            {
+                var newP = new PortfolioPicture()
+                {
+                    Sid = Guid.NewGuid().ToString(),
+                    Data = picture.File,
+                    ProjectId = project.Sid,
+                    IsMainPicture = picture.IsMainPicture
+                };
+
+                project.Pictures.Add(newP);
+            }
+            try
+            {
+                _db.Projects.Update(project);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateProject(PortfolioProject project)
+        {
+            try
+            {
+                _db.Projects.Update(project);
+                _db.SaveChanges();
+            }
+            catch(Exception ex) 
+            {
+                throw ex;
+            }
+        }
+
+        public void SetMainImage(string imageSid, string projectSid)
+        {
+            var images = GetPortfolioPictures(projectSid);
+            foreach(var image in images)
+            {
+                image.IsMainPicture = false;
+            }
+            var newMain = _db.PortfolioPictures.FirstOrDefault(x => x.Sid == imageSid);
+            newMain.IsMainPicture = true;
+            _db.SaveChanges();
+        }
+
+        public void DeleteProject(string portfolioSid)
+        {
+            var project =_db.Projects.FirstOrDefault(x => x.Sid == portfolioSid);
+            if (project == null) return;
+            project.IsActive = false;
+            _db.Projects.Update(project);
+            _db.SaveChanges();
+        }
+
+        public void DeletePicture(string pictureSid)
+        {
+            var picture = _db.PortfolioPictures.FirstOrDefault(x => x.Sid == pictureSid);
+            if (picture.IsMainPicture)
+            {
+                var newMainPicture = _db.PortfolioPictures.FirstOrDefault(x => x.ProjectId == picture.ProjectId && x.Sid != picture.Sid);
+                if (newMainPicture == null) 
+                {
+                    throw new Exception("Cannot remove the only project picture");
+                }
+                newMainPicture.IsMainPicture = true;
+                _db.PortfolioPictures.Update(newMainPicture);
+            }
+            if (picture == null) return;
+            try
+            {
+                _db.PortfolioPictures.Remove(picture);
+                _db.SaveChanges();
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
             }
         }
 

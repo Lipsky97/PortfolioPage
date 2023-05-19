@@ -3,7 +3,7 @@
     ViewBag.Title = $"Portfolio - {Model.Name}";
 }
 <style>
-    .project-image{
+    .project-image {
         text-align: center;
     }
 
@@ -11,16 +11,33 @@
         text-align: center;
         display: inline-block;
         margin: 15px;
-        width: 100%;
+        width: 70%;
     }
 
-    .description{
+    .description {
         text-align: justify;
         font-size: 20px;
+    }
 
+    .edit-view-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
     }
 </style>
 <h2>@Model.Name</h2>
+@if ((bool)ViewBag.IsAdmin)
+{
+    @Html.ActionLink("Edit", "PortfolioViewEdit", "Portfolio", new { projectSid = Model.Sid }, new { @class = "edit-view-button" })
+}
 <div class="description">
     <p>@Model.Description</p>
 </div>

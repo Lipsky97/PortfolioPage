@@ -1,0 +1,140 @@
+﻿@model Portfolio.Web.Models.PortfolioViewEditVM
+@{
+    ViewBag.Title = $"Portfolio - {Model.Name}";
+}
+
+<link rel="stylesheet" href="~/Content/style.css" />
+
+<style>
+    .project-image {
+        text-align: center;
+    }
+
+    img {
+        text-align: center;
+        display: inline-block;
+        margin: 15px;
+        width: 70%
+    }
+
+    .description {
+        text-align: justify;
+        font-size: 20px;
+    }
+
+    .image-item {
+        text-align: center;
+        display: inline-block;
+        margin: 15px;
+    }
+
+    .image-grid {
+        text-align: center;
+    }
+
+    .dynamic-size-textarea {
+        resize: none;
+        overflow: hidden;
+        height: auto;
+    }
+
+    .dynamic-size-textarea:focus {
+        height: auto;
+    }
+
+    .dynamic-size-textarea:not(:focus) {
+        height: auto;
+        min-height: 2em; /* Set a minimum height */
+    }
+
+    .edit-view-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function previewPictures() {
+        var picturesInput = document.getElementById("pictures-input");
+        var picturesPreview = document.getElementById("picture-preview");
+        picturesPreview.innerHTML = "";
+
+        for (var i = 0; i < picturesInput.files.length; i++) {
+            var file = picturesInput.files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var img = document.createElement("img");
+                img.src = event.target.result;
+                picturesPreview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@using (Html.BeginForm("UpdatePortfolio", "Portfolio", FormMethod.Post, new { enctype = "multipart/form-data " }))
+{
+    <div style="display: none;">
+        @Html.TextAreaFor(m => m.Sid)
+    </div>
+    <div class="input-text input-field">
+        @Html.TextBoxFor(m => m.Name)
+    </div>
+    <div class="input-text input-field">
+        @Html.TextBoxFor(m => m.Description, new { @class = "dynamic-size-textarea" })
+    </div>
+    <div class="input-text input-field">
+        @Html.TextBoxFor(m => m.GHLink)
+    </div>
+    <div class="input-button input-field">
+        <input type="submit" value="Submit details" />
+    </div>
+}
+
+@using (Html.BeginForm("AddPictures", "Portfolio", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div style="display: none;">
+        <input type="text" name="projectSid" value="@Model.Sid" />
+    </div>
+    <div class="input-file input-field">
+        <input type="file" id="pictures-input" name="newPictures" onchange="previewPictures()" multiple />
+    </div>
+    <div class="input-button input-field">
+        <input type="submit" value="Submit pictures" />
+    </div>
+}
+
+@Html.ActionLink("Delete", "DeleteProject", "Portfolio", new { projectSid = Model.Sid }, new { @class = "edit-view-button" })
+
+<div id="picture-preview"></div>
+
+<div class="image-grid">
+    @foreach (var image in Model.Pictures)
+    {
+        <div class="image-item">
+            <img src="data:image/jpg;base64,@image.Data" style="width: 300px; height: auto;" />
+            @if (!image.IsMainPicture)
+            {
+                <a href="@Url.Action("DeleteImageEdit", new { imageSid = image.Sid, projectSid = Model.Sid })">
+                    <div class="image-item-link">
+                        <p>Delete</p>
+                    </div>
+                </a>
+                <a href="@Url.Action("MakeImageMain", new { imageSid = image.Sid, projectSid = Model.Sid })">
+                    <div class="image-item-link">
+                        <p>Set as Cover</p>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>

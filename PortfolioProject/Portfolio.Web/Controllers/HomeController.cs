@@ -129,7 +129,7 @@ namespace Portfolio.Web.Controllers
             {
                 var newP = new PortfolioGridVM()
                 {
-                    PictureURL = Convert.ToBase64String(p.Pictures.FirstOrDefault(x => x.IsMainPicture).Data),
+                    PictureURL = Convert.ToBase64String(p.Pictures.First().Data),
                     AltText = "",
                     LinkText = p.Name,
                     LinkUrl = Url.Action("PortfolioView", "Portfolio", new { portfolioSid = $"{p.Sid}" })

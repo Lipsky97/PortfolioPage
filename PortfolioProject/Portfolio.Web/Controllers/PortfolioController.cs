@@ -32,7 +32,8 @@ namespace Portfolio.Web.Controllers
         }
 
         public ActionResult PortfolioView(string portfolioSid) {
-            
+            var isAdmin = _usersService.IsAdmin((string)Session["userid"]);
+            ViewBag.IsAdmin = isAdmin;
             var data = _portfolioProjectService.GetPortfolioProject(portfolioSid);
             var pictures = new List<string>();
             foreach (var p in data.Pictures)
@@ -71,7 +72,7 @@ namespace Portfolio.Web.Controllers
             foreach (var p in vm.Pictures)
             {
                 bool isMainPicture = false;
-                if (vm.Pictures.IndexOf(p) == vm.MainPictureIndex)
+                if (vm.Pictures.IndexOf(p) == vm.MainPictureIndex - 1)
                 {
                     isMainPicture = true;
                 }
@@ -109,6 +110,115 @@ namespace Portfolio.Web.Controllers
             }
         }
 
+        public ActionResult PortfolioViewEdit(string projectSid)
+        {
+            var isAdmin = _usersService.IsAdmin((string)Session["userid"]);
+            ViewBag.IsAdmin = isAdmin;
+            if (!isAdmin)
+            {
+                return View("Index");
+            }
+            var data = _portfolioProjectService.GetPortfolioProject(projectSid);
+            var pictures = new List<PortfolioViewEditPictureVM>();
+            foreach (var p in data.Pictures)
+            {
+                string img = Convert.ToBase64String(p.Data);
+                var newPicture = new PortfolioViewEditPictureVM()
+                {
+                    Sid = p.Sid,
+                    Data = img,
+                    IsMainPicture = p.IsMainPicture,
+                    ProjectId = p.ProjectId,
+                };
+                pictures.Add(newPicture);
+            }
+            var model = new PortfolioViewEditVM()
+            {
+                Description = data.Description,
+                Name = data.Name,
+                Sid = data.Sid,
+                GHLink = data.GHLink,
+                HasGHLink = data.HasGHLink,
+                Pictures = pictures
+            };
+            return View(model);
+        }
+
+        public ActionResult AddPictures(List<HttpPostedFileBase> newPictures, string projectSid)
+        {
+            var pictureList = new List<PortfolioPictureList>();
+            foreach (var p in newPictures)
+            {
+                bool isMainPicture = false;
+                byte[] fileBytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    p.InputStream.CopyTo(memoryStream);
+                    fileBytes = memoryStream.ToArray();
+                    var finalPicutre = new PortfolioPictureList()
+                    {
+                        File = fileBytes,
+                        IsMainPicture = isMainPicture,
+                        Name = p.FileName,
+                    };
+
+                    pictureList.Add(finalPicutre);
+                }
+            }
+            _portfolioProjectService.AddPictures(pictureList, projectSid);
+
+            return RedirectToAction("PortfolioViewEdit", new { projectSid = projectSid });
+        }
+
+        public ActionResult UpdatePortfolio(PortfolioViewVM vm)
+        {
+            if (vm.GHLink != null && vm.GHLink != "")
+            {
+                vm.HasGHLink = true;
+            }
+            else
+            {
+                vm.HasGHLink = false;
+            }
+
+            var project = _portfolioProjectService.GetPortfolioProject(vm.Sid);
+            if (vm.GHLink == null)
+            {
+                project.GHLink = "";
+            }
+            else
+            {
+                project.GHLink = vm.GHLink;
+            }
+            project.HasGHLink = vm.HasGHLink;
+            project.Description = vm.Description;
+            project.Name = vm.Name;
+
+            _portfolioProjectService.UpdateProject(project);
+
+            return RedirectToAction("PortfolioViewEdit", new { projectSid = vm.Sid });
+        }
+
+        public ActionResult DeleteProject(string projectSid)
+        {
+            _portfolioProjectService.DeleteProject(projectSid);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult MakeImageMain(string imageSid, string projectSid)
+        {
+            _portfolioProjectService.SetMainImage(imageSid, projectSid);
+
+            return RedirectToAction("PortfolioViewEdit", new { projectSid = projectSid });
+        }
+
+        public ActionResult DeleteImageEdit(string imageSid, string projectSid)
+        {
+            _portfolioProjectService.DeletePicture(imageSid);
+            
+            return RedirectToAction("PortfolioViewEdit", new { projectSid = projectSid });
+        }
+
         private List<PortfolioGridVM> BuildPortfolioGridData(List<PortfolioProject> data)
         {
             var result = new List<PortfolioGridVM>();
@@ -116,7 +226,7 @@ namespace Portfolio.Web.Controllers
             {
                 var newP = new PortfolioGridVM()
                 {
-                    PictureURL = Convert.ToBase64String(p.Pictures.FirstOrDefault(x => x.IsMainPicture).Data),
+                    PictureURL = Convert.ToBase64String(p.Pictures.First().Data),
                     AltText = "",
                     LinkText = p.Name,
                     LinkUrl = Url.Action("PortfolioView", "Portfolio", new { portfolioSid = $"{p.Sid}"})
