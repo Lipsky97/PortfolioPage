@@ -225,6 +225,7 @@
     <Content Include="App_Images\AboutMe\345804741_600931068654726_683062920684665036_n.jpg" />
     <Content Include="App_Images\AboutMe\IMG_1255.jpg" />
     <Content Include="App_Images\FrontPage\baner1_stronka_4000x1580px.png" />
+    <Content Include="App_Images\FrontPage\baner1_stronka_4000x1580px_v2.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -236,6 +237,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="dbConnectionString.config" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
