@@ -218,6 +218,10 @@
     <Compile Include="Migrations\20230509180308_isActiveProject.designer.cs">
       <DependentUpon>20230509180308_isActiveProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20230521201122_setPictureVisible.cs" />
+    <Compile Include="Migrations\20230521201122_setPictureVisible.designer.cs">
+      <DependentUpon>20230521201122_setPictureVisible.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PortfolioDbContextModelSnapshot.cs" />
     <Compile Include="Models\CV.cs" />
     <Compile Include="Models\Picture.cs" />

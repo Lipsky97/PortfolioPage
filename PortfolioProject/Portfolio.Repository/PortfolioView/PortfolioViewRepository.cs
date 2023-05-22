@@ -6,6 +6,7 @@ using Portfolio.Repository.Users.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Portfolio.Repository.PortfolioView
         void DeleteProject(string portfolioSid);
         void DeletePicture(string pictureSidList);
         void SetMainImage(string imageSid, string projectSid);
+        void ToggleVisible(string imageSid);
     }
     public class PortfolioViewRepository : IPortfolioViewRepository
     {
@@ -53,7 +55,8 @@ namespace Portfolio.Repository.PortfolioView
                     Sid = Guid.NewGuid().ToString(),
                     Data = p.File,
                     ProjectId = newPortfolioView.Sid,
-                    IsMainPicture = p.IsMainPicture
+                    IsMainPicture = p.IsMainPicture,
+                    IsVisible = true
                 };
 
                 newPortfolioView.Pictures.Add(newP);
@@ -124,7 +127,8 @@ namespace Portfolio.Repository.PortfolioView
                     Sid = Guid.NewGuid().ToString(),
                     Data = picture.File,
                     ProjectId = project.Sid,
-                    IsMainPicture = picture.IsMainPicture
+                    IsMainPicture = picture.IsMainPicture,
+                    IsVisible = true
                 };
 
                 project.Pictures.Add(newP);
@@ -135,6 +139,20 @@ namespace Portfolio.Repository.PortfolioView
                 _db.SaveChanges();
             }
             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ToggleVisible(string imageSid)
+        {
+            try
+            {
+                var picture = _db.PortfolioPictures.FirstOrDefault(x => x.Sid == imageSid);
+                picture.IsVisible = !picture.IsVisible;
+                _db.SaveChanges();
+            }
+            catch(Exception ex)
             {
                 throw ex;
             }

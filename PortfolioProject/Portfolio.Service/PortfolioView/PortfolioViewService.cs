@@ -21,6 +21,7 @@ namespace Portfolio.Service.PortfolioView
         void DeleteProject(string portfolioSid);
         void DeletePicture(string pictureSid);
         void SetMainImage(string imageSid, string projectSid);
+        void ToggleVisible(string imageSid);
     }
     public class PortfolioViewService : IPortfolioViewService
     {
@@ -60,6 +61,11 @@ namespace Portfolio.Service.PortfolioView
         public void AddPictures(List<PortfolioPictureList> pictureList, string projectSid)
         {
             _portfolioViewRepository.AddPictures(pictureList, projectSid);
+        }
+
+        public void ToggleVisible(string imageSid)
+        {
+            _portfolioViewRepository.ToggleVisible(imageSid);
         }
 
         public void UpdateProject(PortfolioProject portfolioProject) 

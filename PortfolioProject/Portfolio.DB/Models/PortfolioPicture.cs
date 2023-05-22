@@ -14,5 +14,6 @@ namespace Portfolio.DB.Models
         public byte[] Data { get; set; }
         public bool IsMainPicture { get; set; }
         public string ProjectId { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

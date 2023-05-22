@@ -135,6 +135,22 @@
                     </div>
                 </a>
             }
+            @if (image.IsVisible)
+                {
+                    <a href="@Url.Action("TogglePictureVisibility", new { imageSid = image.Sid, projectSid = Model.Sid })">
+                        <div class="image-item-link">
+                            <p>Hide</p>
+                        </div>
+                    </a>
+                }
+            @if (!image.IsVisible)
+                {
+                    <a href="@Url.Action("TogglePictureVisibility", new { imageSid = image.Sid, projectSid = Model.Sid })">
+                        <div class="image-item-link">
+                            <p>Make visible</p>
+                        </div>
+                    </a>
+                }
         </div>
     }
 </div>

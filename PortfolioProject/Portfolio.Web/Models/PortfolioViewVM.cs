@@ -12,6 +12,6 @@ namespace Portfolio.Web.Models
         public string Description { get; set; }
         public string GHLink { get; set; }
         public bool HasGHLink { get; set; }
-        public List<string> PictureURLs { get; set; }
+        public List<PortfolioViewEditPictureVM> Pictures { get; set; }
     }
 }

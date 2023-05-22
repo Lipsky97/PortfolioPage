@@ -11,5 +11,6 @@ namespace Portfolio.Web.Models
         public string Data { get; set; }
         public bool IsMainPicture { get; set; }
         public string ProjectId { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

@@ -35,11 +35,19 @@ namespace Portfolio.Web.Controllers
             var isAdmin = _usersService.IsAdmin((string)Session["userid"]);
             ViewBag.IsAdmin = isAdmin;
             var data = _portfolioProjectService.GetPortfolioProject(portfolioSid);
-            var pictures = new List<string>();
+            var pictures = new List<PortfolioViewEditPictureVM>();
             foreach (var p in data.Pictures)
             {
                 string img = Convert.ToBase64String(p.Data);
-                pictures.Add(img);
+                var newPicture = new PortfolioViewEditPictureVM()
+                {
+                    Sid = p.Sid,
+                    Data = img,
+                    IsMainPicture = p.IsMainPicture,
+                    ProjectId = p.ProjectId,
+                    IsVisible = p.IsVisible,
+                };
+                pictures.Add(newPicture);
             }
             var model = new PortfolioViewVM()
             {
@@ -48,7 +56,7 @@ namespace Portfolio.Web.Controllers
                 Sid = data.Sid,
                 GHLink= data.GHLink,
                 HasGHLink = data.HasGHLink,
-                PictureURLs = pictures
+                Pictures = pictures
             };
             return View(model);
         }
@@ -129,6 +137,7 @@ namespace Portfolio.Web.Controllers
                     Data = img,
                     IsMainPicture = p.IsMainPicture,
                     ProjectId = p.ProjectId,
+                    IsVisible = p.IsVisible,
                 };
                 pictures.Add(newPicture);
             }
@@ -167,6 +176,12 @@ namespace Portfolio.Web.Controllers
             }
             _portfolioProjectService.AddPictures(pictureList, projectSid);
 
+            return RedirectToAction("PortfolioViewEdit", new { projectSid = projectSid });
+        }
+
+        public ActionResult TogglePictureVisibility(string imageSid, string projectSid)
+        {
+            _portfolioProjectService.ToggleVisible(imageSid);
             return RedirectToAction("PortfolioViewEdit", new { projectSid = projectSid });
         }
 

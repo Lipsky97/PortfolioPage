@@ -47,9 +47,12 @@
         <p>GitHub link: <a href="@Model.GHLink">link</a></p>
     </div>
 }
-@foreach (var image in Model.PictureURLs)
+@foreach (var image in Model.Pictures)
 {
-    <div class="project-image">
-        <img src="data:image/jpg;base64,@image" />
-    </div>
+    if (image.IsVisible)
+    {
+        <div class="project-image">
+            <img src="data:image/jpg;base64,@image.Data" />
+        </div>
+    }
 }
